@@ -19,6 +19,8 @@ def delete_message(handle):
         print(e.response['Error']['Message'])
 
 def get_message():
+    message_amount = 9
+    for vales in range (message_amount)
     try:
         # Receive message from SQS queue. Each message has two MessageAttributes: order and word
         # You want to extract these two attributes to reassemble the message
@@ -44,14 +46,31 @@ def get_message():
             print(f"Order: {order}")
             print(f"Word: {word}")
 
+        message = {order:word}
+
+        messages_dict.update(message)
+
+        delete_message(handle)
+
         # If there is no message in the queue, print a message and exit    
         else:
             print("No message in the queue")
-            exit(1)
+            continue
             
     # Handle any errors that may occur connecting to SQS
     except ClientError as e:
         print(e.response['Error']['Message'])
+
+print(messages_dict)
+sorted_dict = dict(sorted(messages_dict.items()))
+print(sorted_dict)
+
+for each in sorted_dict:
+    final_message = sorted_dict[each]
+    print(final_message, end = ' ')
+
+if __name__ == "__main__":
+    get_message()
 
 # Trigger the function
 if __name__ == "__main__":
